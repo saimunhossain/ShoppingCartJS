@@ -1,5 +1,6 @@
 'use strict';
 
+const cart = [];
 const cartDOM = document.querySelector('.cart');
 const addToCartButtonsDOM = document.querySelectorAll('[data-action="ADD_TO_CART"]');
 
@@ -18,5 +19,8 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
             <h3 class="cart__item__price">${product.price}</h3>
         </div>
         `);
+        cart.push(product);
+        addToCartButtonDOM.innerText = "In Cart";
+        
     });
 });
