@@ -46,7 +46,9 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
                     cartItemDOM.querySelector('[data-action="DECREASE_ITEM"]').addEventListener('click', () => {
                         cart.forEach(cartItem => {
                             if(cartItem.name === product.name){
-                                cartItemDOM.querySelector('.cart__item__quantity').innerText = --cartItem.quantity;
+                                if(cartItem.quantity > 1){
+                                    cartItemDOM.querySelector('.cart__item__quantity').innerText = --cartItem.quantity;
+                                }
                             }
                         }); 
                     });
