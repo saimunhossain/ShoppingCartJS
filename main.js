@@ -1,6 +1,6 @@
 'use strict';
 
-const cart = [];
+let cart = [];
 const cartDOM = document.querySelector('.cart');
 const addToCartButtonsDOM = document.querySelectorAll('[data-action="ADD_TO_CART"]');
 
@@ -48,6 +48,11 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
                             if(cartItem.name === product.name){
                                 if(cartItem.quantity > 1){
                                     cartItemDOM.querySelector('.cart__item__quantity').innerText = --cartItem.quantity;
+                                }else{
+                                    cartItemDOM.classList.add('cart__item--removed')
+                                    setTimeout(() => cartItemDOM.remove(), 300);
+                                    cart = cart.filter(cartItem => cartItem.name !== product.name);
+                                    addToCartButtonDOM.innerText = 'Add To Cart';
                                 }
                             }
                         }); 
