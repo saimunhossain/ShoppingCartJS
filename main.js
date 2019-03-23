@@ -59,6 +59,18 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
                             }
                         }); 
                     });
+
+                    cartItemDOM.querySelector('[data-action="REMOVE_ITEM"]').addEventListener('click', () => {
+                        cart.forEach(cartItem => {
+                            if(cartItem.name === product.name){
+                                cartItemDOM.classList.add('cart__item--removed')
+                                setTimeout(() => cartItemDOM.remove(), 300);
+                                cart = cart.filter(cartItem => cartItem.name !== product.name);
+                                addToCartButtonDOM.innerText = 'Add To Cart';
+                                addToCartButtonDOM.disabled = false;
+                            }
+                        }); 
+                    });
                 }
             });
              
