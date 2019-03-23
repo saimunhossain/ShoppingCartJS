@@ -34,13 +34,22 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
             const cartItemsDOM = cartDOM.querySelectorAll('.cart__item');
             cartItemsDOM.forEach(cartItemDOM => {                
                 if(cartItemDOM.querySelector('.cart__item__name').innerText === product.name){
+                    
                     cartItemDOM.querySelector('[data-action="INCREASE_ITEM"]').addEventListener('click', () => {
                         cart.forEach(cartItem => {
                             if(cartItem.name === product.name){
                                 cartItemDOM.querySelector('.cart__item__quantity').innerText = ++cartItem.quantity;
                             }
                         }); 
-                    });   
+                    });
+                    
+                    cartItemDOM.querySelector('[data-action="DECREASE_ITEM"]').addEventListener('click', () => {
+                        cart.forEach(cartItem => {
+                            if(cartItem.name === product.name){
+                                cartItemDOM.querySelector('.cart__item__quantity').innerText = --cartItem.quantity;
+                            }
+                        }); 
+                    });
                 }
             });
              
