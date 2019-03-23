@@ -30,6 +30,7 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
             `);
             cart.push(product);
             addToCartButtonDOM.innerText = "In Cart"; 
+            addToCartButtonDOM.disabled = true;
 
             const cartItemsDOM = cartDOM.querySelectorAll('.cart__item');
             cartItemsDOM.forEach(cartItemDOM => {                
@@ -53,6 +54,7 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
                                     setTimeout(() => cartItemDOM.remove(), 300);
                                     cart = cart.filter(cartItem => cartItem.name !== product.name);
                                     addToCartButtonDOM.innerText = 'Add To Cart';
+                                    addToCartButtonDOM.disabled = false;
                                 }
                             }
                         }); 
