@@ -20,7 +20,16 @@ if(cart.length > 0){
                 <button class="btn btn--primary btn--small" data-action="INCREASE_ITEM">&plus;</button>
                 <button class="btn btn--danger btn--small" data-action="REMOVE_ITEM">&times;</button>
             </div>
-            `);
+        `);
+
+        addToCartButtonsDOM.forEach(addToCartButtonsDOM => {
+            const productDOM = addToCartButtonsDOM.parentNode;
+
+            if(productDOM.querySelector('.product__name').innerText === product.name){
+                addToCartButtonsDOM.innerText = 'In Cart';
+                addToCartButtonsDOM.disabled = true;
+            }
+        });
     })
 }
 
