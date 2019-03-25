@@ -4,6 +4,8 @@ let cart = [];
 const cartDOM = document.querySelector('.cart');
 const addToCartButtonsDOM = document.querySelectorAll('[data-action="ADD_TO_CART"]');
 
+console.log(JSON.parse(localStorage.getItem('cart')));
+
 addToCartButtonsDOM.forEach(addToCartButtonDOM => {
     addToCartButtonDOM.addEventListener('click', () => {
         const productDOM = addToCartButtonDOM.parentNode;
@@ -29,6 +31,7 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
             </div>
             `);
             cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
             addToCartButtonDOM.innerText = "In Cart"; 
             addToCartButtonDOM.disabled = true;
 
@@ -41,6 +44,7 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
                             if(cartItem.name === product.name){
                                 cartItemDOM.querySelector('.cart__item__quantity').innerText = ++cartItem.quantity;
                                 cartItemDOM.querySelector('[data-action="DECREASE_ITEM"]').classList.remove('btn--danger');
+                                localStorage.setItem('cart', JSON.stringify(cart));
                             }
                         }); 
                     });
@@ -50,10 +54,12 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
                             if(cartItem.name === product.name){
                                 if(cartItem.quantity > 1){
                                     cartItemDOM.querySelector('.cart__item__quantity').innerText = --cartItem.quantity;
+                                    localStorage.setItem('cart', JSON.stringify(cart));
                                 }else{
                                     cartItemDOM.classList.add('cart__item--removed');
                                     setTimeout(() => cartItemDOM.remove(), 300);
                                     cart = cart.filter(cartItem => cartItem.name !== product.name);
+                                    localStorage.setItem('cart', JSON.stringify(cart));
                                     addToCartButtonDOM.innerText = 'Add To Cart';
                                     addToCartButtonDOM.disabled = false;
                                 }
@@ -70,6 +76,7 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
                                 cartItemDOM.classList.add('cart__item--removed')
                                 setTimeout(() => cartItemDOM.remove(), 300);
                                 cart = cart.filter(cartItem => cartItem.name !== product.name);
+                                localStorage.setItem('cart', JSON.stringify(cart));
                                 addToCartButtonDOM.innerText = 'Add To Cart';
                                 addToCartButtonDOM.disabled = false;
                             }
