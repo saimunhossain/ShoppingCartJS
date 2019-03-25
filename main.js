@@ -28,6 +28,57 @@ if(cart.length > 0){
             if(productDOM.querySelector('.product__name').innerText === product.name){
                 addToCartButtonsDOM.innerText = 'In Cart';
                 addToCartButtonsDOM.disabled = true;
+                
+                const cartItemsDOM = cartDOM.querySelectorAll('.cart__item');
+            cartItemsDOM.forEach(cartItemDOM => {                
+                if(cartItemDOM.querySelector('.cart__item__name').innerText === product.name){
+                    
+                    cartItemDOM.querySelector('[data-action="INCREASE_ITEM"]').addEventListener('click', () => {
+                        cart.forEach(cartItem => {
+                            if(cartItem.name === product.name){
+                                cartItemDOM.querySelector('.cart__item__quantity').innerText = ++cartItem.quantity;
+                                cartItemDOM.querySelector('[data-action="DECREASE_ITEM"]').classList.remove('btn--danger');
+                                localStorage.setItem('cart', JSON.stringify(cart));
+                            }
+                        }); 
+                    });
+                    
+                    cartItemDOM.querySelector('[data-action="DECREASE_ITEM"]').addEventListener('click', () => {
+                        cart.forEach(cartItem => {
+                            if(cartItem.name === product.name){
+                                if(cartItem.quantity > 1){
+                                    cartItemDOM.querySelector('.cart__item__quantity').innerText = --cartItem.quantity;
+                                    localStorage.setItem('cart', JSON.stringify(cart));
+                                }else{
+                                    cartItemDOM.classList.add('cart__item--removed');
+                                    setTimeout(() => cartItemDOM.remove(), 300);
+                                    cart = cart.filter(cartItem => cartItem.name !== product.name);
+                                    localStorage.setItem('cart', JSON.stringify(cart));
+                                    addToCartButtonDOM.innerText = 'Add To Cart';
+                                    addToCartButtonDOM.disabled = false;
+                                }
+                                if(cartItem.quantity === 1){
+                                    cartItemDOM.querySelector('[data-action="DECREASE_ITEM"]').classList.add('btn--danger');
+                                }
+                            }
+                        }); 
+                    });
+
+                    cartItemDOM.querySelector('[data-action="REMOVE_ITEM"]').addEventListener('click', () => {
+                        cart.forEach(cartItem => {
+                            if(cartItem.name === product.name){
+                                cartItemDOM.classList.add('cart__item--removed')
+                                setTimeout(() => cartItemDOM.remove(), 300);
+                                cart = cart.filter(cartItem => cartItem.name !== product.name);
+                                localStorage.setItem('cart', JSON.stringify(cart));
+                                addToCartButtonDOM.innerText = 'Add To Cart';
+                                addToCartButtonDOM.disabled = false;
+                            }
+                        }); 
+                    });
+                }
+            });
+                
             }
         });
     })
