@@ -57,6 +57,15 @@ function insertItemToDOM(product){
             <button class="btn btn--danger btn--small" data-action="REMOVE_ITEM">&times;</button>
         </div>
     `);
+
+    if(document.querySelector('.cart-footer') === null){
+        cartDOM.insertAdjacentHTML('afterend', `
+        <div class="cart-footer">
+            <button class="btn btn--danger data-action="CLEAR_CART">Clear Cart</button>
+            <button class="btn btn--primary data-action="CHECKOUT">Pay</button>
+        </div>
+    `);
+    }
 }
 
 function handleActionButtons(addToCartButtonDOM, product){
