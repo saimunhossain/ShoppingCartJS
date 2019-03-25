@@ -10,17 +10,8 @@ console.log(cart);
 if(cart.length > 0){
     cart.forEach(cartItem => {
         const product = cartItem;
-        cartDOM.insertAdjacentHTML('beforeend', `
-            <div class="cart__item">
-                <img class="cart__item__image" src="${product.image}" alt="${product.name}">
-                <h3 class="cart__item__name">${product.name}</h3>
-                <h3 class="cart__item__price">${product.price}</h3>
-                <button class="btn btn--primary btn--small${(product.quantity === 1 ? ' btn--danger' : '')}" data-action="DECREASE_ITEM">&minus;</button>
-                <h3 class="cart__item__quantity">${product.quantity}</h3>
-                <button class="btn btn--primary btn--small" data-action="INCREASE_ITEM">&plus;</button>
-                <button class="btn btn--danger btn--small" data-action="REMOVE_ITEM">&times;</button>
-            </div>
-        `);
+        
+        insertItemToCart(product);
 
         addToCartButtonsDOM.forEach(addToCartButtonsDOM => {
             const productDOM = addToCartButtonsDOM.parentNode;
@@ -97,17 +88,8 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
         const isInCart = (cart.filter(cartItem => (cartItem.name === product.name)).length > 0);
 
         if(!isInCart){
-            cartDOM.insertAdjacentHTML('beforeend', `
-            <div class="cart__item">
-                <img class="cart__item__image" src="${product.image}" alt="${product.name}">
-                <h3 class="cart__item__name">${product.name}</h3>
-                <h3 class="cart__item__price">${product.price}</h3>
-                <button class="btn btn--primary btn--small btn--danger${(product.quantity === 1 ? ' btn--danger' : '')}" data-action="DECREASE_ITEM">&minus;</button>
-                <h3 class="cart__item__quantity">${product.quantity}</h3>
-                <button class="btn btn--primary btn--small" data-action="INCREASE_ITEM">&plus;</button>
-                <button class="btn btn--danger btn--small" data-action="REMOVE_ITEM">&times;</button>
-            </div>
-            `);
+            insertItemToCart(product);
+            
             cart.push(product);
             localStorage.setItem('cart', JSON.stringify(cart));
             addToCartButtonDOM.innerText = "In Cart"; 
@@ -167,3 +149,18 @@ addToCartButtonsDOM.forEach(addToCartButtonDOM => {
         
     });
 });
+
+
+function insertItemToCart(product){
+    cartDOM.insertAdjacentHTML('beforeend', `
+            <div class="cart__item">
+                <img class="cart__item__image" src="${product.image}" alt="${product.name}">
+                <h3 class="cart__item__name">${product.name}</h3>
+                <h3 class="cart__item__price">${product.price}</h3>
+                <button class="btn btn--primary btn--small${(product.quantity === 1 ? ' btn--danger' : '')}" data-action="DECREASE_ITEM">&minus;</button>
+                <h3 class="cart__item__quantity">${product.quantity}</h3>
+                <button class="btn btn--primary btn--small" data-action="INCREASE_ITEM">&plus;</button>
+                <button class="btn btn--danger btn--small" data-action="REMOVE_ITEM">&times;</button>
+            </div>
+        `);
+}
