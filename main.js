@@ -58,14 +58,7 @@ function insertItemToDOM(product){
         </div>
     `);
 
-    if(document.querySelector('.cart-footer') === null){
-        cartDOM.insertAdjacentHTML('afterend', `
-        <div class="cart-footer">
-            <button class="btn btn--danger data-action="CLEAR_CART">Clear Cart</button>
-            <button class="btn btn--primary data-action="CHECKOUT">Pay</button>
-        </div>
-    `);
-    }
+    addCartFooter();
 }
 
 function handleActionButtons(addToCartButtonDOM, product){
@@ -116,4 +109,41 @@ function removeItem(product, cartItemDOM, addToCartButtonDOM){
     localStorage.setItem('cart', JSON.stringify(cart));
     addToCartButtonDOM.innerText = 'Add To Cart';
     addToCartButtonDOM.disabled = false;
+
+    if(cart.length < 1){
+        document.querySelector('.cart-footer').remove();
+    }
+}
+
+function addCartFooter(){
+    if(document.querySelector('.cart-footer') === null){
+        cartDOM.insertAdjacentHTML('afterend', `
+        <div class="cart-footer">
+            <button class="btn btn--danger" data-action="CLEAR_CART">Clear Cart</button>
+            <button class="btn btn--primary" data-action="CHECKOUT">Pay</button>
+        </div>
+    `);
+
+    document.querySelector('[data-action="CLEAR_CART"]').addEventListener('click', () => clearCart());
+    document.querySelector('[data-action="CHECKOUT"]').addEventListener('click', () => checkout());
+    }
+
+}
+
+function clearCart(){
+    cartDOM.querySelectorAll('.cart__item').forEach(cartItemDOM => {
+        cartItemDOM.classList.add('cart__item--removed');
+        setTimeout(() => cartItemDOM.remove(), 300);
+    });
+    cart = [];
+    localStorage.removeItem('cart');
+    document.querySelector('.cart-footer').remove();
+
+    addToCartButtonsDOM.forEach(addToCartButtonDOM => {
+        addToCartButtonDOM.innerText = 'Add To Cart';
+        addToCartButtonDOM.disabled = false;
+    });
+}
+function checkout(){
+
 }
